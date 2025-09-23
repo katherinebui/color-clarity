@@ -17,7 +17,7 @@ export default function Suggestions({ bg, fg, onApply }) {
         Suggestions based on your background to help meet WCAG contrast.
       </p>
 
-      <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+      <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-1">
         <div className="flex items-center justify-between rounded-md border p-2 dark:border-neutral-700">
           <div className="flex items-center gap-3">
             <span className="text-xs font-medium">AA Target</span>

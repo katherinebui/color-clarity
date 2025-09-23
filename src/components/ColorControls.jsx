@@ -21,7 +21,7 @@ export default function ColorControls({ label, color, onChange }) {
   }
 
   return (
-    <div className="flex flex-col gap-2" aria-labelledby={pickerId}>
+    <div className="flex flex-col gap-2 flex items-center" aria-labelledby={pickerId}>
       <label id={pickerId} htmlFor={inputId} className="text-sm font-medium">
         {label}
       </label>

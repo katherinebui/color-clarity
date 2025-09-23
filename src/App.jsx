@@ -66,25 +66,30 @@ function App() {
       </header>
 
       {/* Main content */}
-      <main className="mx-auto grid max-w-6xl grid-cols-1 gap-6 px-4 py-6 lg:grid-cols-5">
-        <section className="space-y-4 lg:col-span-2" aria-label="Color pair picker">
+      <main className="mx-auto grid max-w-7xl grid-cols-1 gap-4 px-4 py-6 xl:grid-cols-3">
+        {/* Color Controls Panel */}
+        <section className="xl:col-span-1" aria-label="Color pair picker">
           <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-neutral-800 dark:bg-neutral-900">
             <div className="mb-3">
               <h2 className="text-base font-semibold">Choose colors</h2>
-              <p className="text-sm text-gray-600 dark:text-neutral-400">Pick a background and text color. You can type hex values or use the pickers.</p>
+              <p className="text-sm text-gray-600 dark:text-neutral-400">Pick colors and see contrast.</p>
             </div>
-            <div className="grid grid-cols-1 gap-6">
+            <div className="grid grid-cols-1 gap-4">
               <ColorControls label="Background" color={bg} onChange={setBg} />
               <ColorControls label="Text" color={fg} onChange={setFg} />
             </div>
           </div>
-
-          <ExportPanel bg={bg} fg={fg} />
         </section>
 
-        <section className="space-y-4 lg:col-span-3" aria-label="Accessibility preview and suggestions">
+        {/* Preview Panel and Suggestions*/}
+        <section className="xl:col-span-1 space-y-4" aria-label="Smart suggestions and ccessibility preview">
           <AccessiblePreview bg={bg} fg={fg} />
           <Suggestions bg={bg} fg={fg} onApply={setFg} />
+        </section>
+
+        {/* Export Panel */}
+        <section className="xl:col-span-1" aria-label="Export">
+          <ExportPanel bg={bg} fg={fg} />
         </section>
       </main>
 
