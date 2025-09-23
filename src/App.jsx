@@ -1,0 +1,97 @@
+import { useMemo, useRef, useState } from 'react'
+import './App.css'
+import './index.css'
+import ColorControls from './components/ColorControls'
+import AccessiblePreview from './components/AccessiblePreview'
+import Suggestions from './components/Suggestions'
+import ExportPanel from './components/ExportPanel'
+import { evaluateWCAG } from './utils/contrast'
+
+function randomHex() {
+  return `#${Math.floor(Math.random() * 0xffffff)
+    .toString(16)
+    .padStart(6, '0')}`
+}
+
+function App() {
+  // Default to a high-contrast pair
+  const [bg, setBg] = useState('#0f172a') // slate-900
+  const [fg, setFg] = useState('#ffffff')
+
+  // Live region to announce pass/fail status
+  const liveRef = useRef(null)
+
+  const wcag = useMemo(() => evaluateWCAG(bg, fg), [bg, fg])
+
+  function announceStatus() {
+    const msg = `Contrast ${wcag.ratio.toFixed(2)} to 1. ` +
+      `AA normal ${wcag.AA.normal ? 'passes' : 'fails'}. ` +
+      `AAA normal ${wcag.AAA.normal ? 'passes' : 'fails'}.`
+    if (liveRef.current) {
+      liveRef.current.textContent = msg
+    }
+  }
+
+  function randomizePair() {
+    const newBg = randomHex()
+    const newFg = randomHex()
+    setBg(newBg)
+    setFg(newFg)
+    // Defer announce to next tick so wcag recomputes
+    setTimeout(announceStatus, 0)
+  }
+
+  return (
+    <div className="min-h-screen">
+      {/* App header */}
+      <header className="sticky top-0 z-10 border-b bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:bg-neutral-900/80 dark:supports-[backdrop-filter]:bg-neutral-900/60">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+          <h1 className="text-lg font-bold tracking-tight">Color Clarity</h1>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={randomizePair}
+              className="rounded-md border px-3 py-1.5 text-sm font-semibold hover:bg-gray-50 focus-visible:ring-2 dark:border-neutral-700 dark:hover:bg-neutral-800"
+              aria-label="Generate random colors"
+            >
+              Randomize
+            </button>
+            <a
+              className="rounded-md border px-3 py-1.5 text-sm hover:bg-gray-50 focus-visible:ring-2 dark:border-neutral-700 dark:hover:bg-neutral-800"
+              href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noreferrer"
+            >
+              WCAG 2.2
+            </a>
+          </div>
+        </div>
+      </header>
+
+      {/* Main content */}
+      <main className="mx-auto grid max-w-6xl grid-cols-1 gap-6 px-4 py-6 lg:grid-cols-5">
+        <section className="space-y-4 lg:col-span-2" aria-label="Color pair picker">
+          <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-neutral-800 dark:bg-neutral-900">
+            <div className="mb-3">
+              <h2 className="text-base font-semibold">Choose colors</h2>
+              <p className="text-sm text-gray-600 dark:text-neutral-400">Pick a background and text color. You can type hex values or use the pickers.</p>
+            </div>
+            <div className="grid grid-cols-1 gap-6">
+              <ColorControls label="Background" color={bg} onChange={setBg} />
+              <ColorControls label="Text" color={fg} onChange={setFg} />
+            </div>
+          </div>
+
+          <ExportPanel bg={bg} fg={fg} />
+        </section>
+
+        <section className="space-y-4 lg:col-span-3" aria-label="Accessibility preview and suggestions">
+          <AccessiblePreview bg={bg} fg={fg} />
+          <Suggestions bg={bg} fg={fg} onApply={setFg} />
+        </section>
+      </main>
+
+      {/* ARIA live region for updates (invisible) */}
+      <div aria-live="polite" aria-atomic="true" className="sr-only" ref={liveRef} />
+    </div>
+  )
+}
+
+export default App

@@ -1,0 +1,20 @@
+/* Tailwind v4: import the framework */
+@import "tailwindcss";
+
+/* Base resets and defaults to complement Tailwind */
+:root {
+  color-scheme: light dark;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  @apply antialiased bg-gray-50 text-gray-900 dark:bg-neutral-900 dark:text-neutral-100;
+}
+
+/* Focus styles for improved accessibility */
+*:focus-visible {
+  @apply outline-none ring-2 ring-offset-2 ring-blue-500 ring-offset-white dark:ring-offset-neutral-900;
+}
