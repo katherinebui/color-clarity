@@ -1,6 +1,8 @@
 # Color Clarity 🎨
 
 A fun, accessible color generator web app that helps you create and evaluate color combinations against WCAG 2.2 accessibility standards. Perfect for designers, developers, and anyone who wants to ensure their color choices are inclusive and accessible.
+<img width="1344" height="946" alt="Screenshot 2025-09-23 at 12 34 07" src="https://github.com/user-attachments/assets/2b540ec9-4541-47ff-b84c-a2936b04689d" />
+
 
 ## ✨ Features
 
@@ -88,3 +90,5 @@ Color Clarity evaluates contrast ratios against these thresholds:
 - [WCAG 2.2 Guidelines](https://www.w3.org/TR/WCAG22/) for accessibility standards
 - [react-colorful](https://github.com/omgovich/react-colorful) for beautiful color pickers
 - [chroma.js](https://gka.github.io/chroma.js/) for color manipulation and contrast calculations
+
+
