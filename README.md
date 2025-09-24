@@ -23,11 +23,6 @@ A fun, accessible color generator web app that helps you create and evaluate col
 
 ## 🚀 Getting Started
 
-### Prerequisites
-
-- Node.js v22+ (we recommend using nvm)
-- npm or yarn
-
 ### Installation
 
 1. **Install dependencies**
