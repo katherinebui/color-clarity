@@ -30,36 +30,17 @@ A fun, accessible color generator web app that helps you create and evaluate col
 
 ### Installation
 
-1. **Clone the repository**
-   ```bash
-   git clone <your-repo-url>
-   cd color-clarity
-   ```
-
-2. **Set up Node.js version** (if using nvm)
-   ```bash
-   nvm use
-   # If Node 22 isn't installed: nvm install
-   ```
-
-3. **Install dependencies**
+1. **Install dependencies**
    ```bash
    npm install
    ```
 
-4. **Start the development server**
+2. **Start the development server**
    ```bash
    npm run dev
    ```
 
-5. **Open your browser** and navigate to `http://localhost:5173`
-
-### Build for Production
-
-```bash
-npm run build
-npm run preview  # Preview the production build
-```
+3. **Open your browser** and navigate to `http://localhost:5174`
 
 ## 🎨 How to Use
 
