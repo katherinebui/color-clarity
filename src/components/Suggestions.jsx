@@ -1,14 +1,14 @@
 // Suggestions component that recommends accessible text colors for a chosen background.
 // Provides a button to auto-apply the suggested foreground color.
 
-import React from 'react'
-import { suggestAccessibleForeground, CONTRAST_THRESHOLDS, evaluateWCAG } from '../utils/contrast'
+import React from 'react';
+import { suggestAccessibleForeground, CONTRAST_THRESHOLDS, evaluateWCAG } from '../utils/contrast';
 
 export default function Suggestions({ bg, fg, onApply }) {
-  const suggestedAA = suggestAccessibleForeground(bg, CONTRAST_THRESHOLDS.AA_NORMAL)
-  const suggestedAAA = suggestAccessibleForeground(bg, CONTRAST_THRESHOLDS.AAA_NORMAL)
+  const suggestedAA = suggestAccessibleForeground(bg, CONTRAST_THRESHOLDS.AA_NORMAL);
+  const suggestedAAA = suggestAccessibleForeground(bg, CONTRAST_THRESHOLDS.AAA_NORMAL);
 
-  const current = evaluateWCAG(bg, fg)
+  const current = evaluateWCAG(bg, fg);
 
   return (
     <div className="rounded-lg border border-gray-200 p-3 dark:border-neutral-800">
@@ -51,5 +51,5 @@ export default function Suggestions({ bg, fg, onApply }) {
         Current pair: {fg} on {bg}. This pair {current.AA.normal ? 'passes' : 'fails'} AA normal.
       </p>
     </div>
-  )
+  );
 }

@@ -2,9 +2,9 @@
 // with the currently selected background and text colors. It includes visible
 // labels and uses icons/text to avoid relying on color alone for meaning.
 
-import React from 'react'
-import ContrastBadge from './ContrastBadge'
-import { evaluateWCAG } from '../utils/contrast'
+import React from 'react';
+import ContrastBadge from './ContrastBadge';
+import { evaluateWCAG } from '../utils/contrast';
 
 function Section({ title, children }) {
   return (
@@ -12,11 +12,11 @@ function Section({ title, children }) {
       <h3 className="text-sm font-semibold tracking-wide text-gray-700 dark:text-neutral-300">{title}</h3>
       {children}
     </section>
-  )
+  );
 }
 
 export default function AccessiblePreview({ bg, fg }) {
-  const wcag = evaluateWCAG(bg, fg)
+  const wcag = evaluateWCAG(bg, fg);
 
   return (
     <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-neutral-800 dark:bg-neutral-900">
@@ -24,7 +24,7 @@ export default function AccessiblePreview({ bg, fg }) {
         <ContrastBadge bg={bg} fg={fg} />
       </div>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2" style={{ backgroundColor: bg, color: fg }}>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 p-2 rounded-lg" style={{ backgroundColor: bg, color: fg }}>
         <Section title="Button">
           <button
             className="inline-flex items-center gap-2 rounded-md border px-4 py-2 text-sm font-semibold shadow-sm transition focus-visible:ring-2 disabled:opacity-50"
@@ -62,22 +62,26 @@ export default function AccessiblePreview({ bg, fg }) {
         </Section>
 
         <Section title="Status">
-          <ul className="text-sm">
+          <ul className="text-sm space-y-1">
             <li>
               <span className="font-medium">AA Normal:</span> {wcag.AA.normal ? 'Pass' : 'Fail'}
+              <div className="text-xs opacity-75 ml-2">Min 4.5:1 ratio - Standard compliance</div>
             </li>
             <li>
               <span className="font-medium">AA Large:</span> {wcag.AA.large ? 'Pass' : 'Fail'}
+              <div className="text-xs opacity-75 ml-2">Min 3.0:1 ratio - Large text (18pt+ or 14pt+ bold)</div>
             </li>
             <li>
               <span className="font-medium">AAA Normal:</span> {wcag.AAA.normal ? 'Pass' : 'Fail'}
+              <div className="text-xs opacity-75 ml-2">Min 7.0:1 ratio - Enhanced compliance</div>
             </li>
             <li>
               <span className="font-medium">AAA Large:</span> {wcag.AAA.large ? 'Pass' : 'Fail'}
+              <div className="text-xs opacity-75 ml-2">Min 4.5:1 ratio - Enhanced large text</div>
             </li>
           </ul>
         </Section>
       </div>
     </div>
-  )
+  );
 }

@@ -2,18 +2,18 @@
 // a Tailwind snippet, or JSON design tokens. Provides copy-to-clipboard buttons
 // with ARIA live confirmation.
 
-import React, { useRef, useState } from 'react'
-import { toCSSVars, toTailwindConfig, toJSONTokens } from '../utils/tokens'
+import React, { useRef, useState } from 'react';
+import { toCSSVars, toTailwindConfig, toJSONTokens } from '../utils/tokens';
 
 function TextBlock({ label, value }) {
-  const ref = useRef(null)
-  const [copied, setCopied] = useState(false)
+  const ref = useRef(null);
+  const [copied, setCopied] = useState(false);
 
   async function copy() {
     try {
-      await navigator.clipboard.writeText(value)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 1500)
+      await navigator.clipboard.writeText(value);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
     } catch {}
   }
 
@@ -38,13 +38,13 @@ function TextBlock({ label, value }) {
         value={value}
       />
     </div>
-  )
+  );
 }
 
 export default function ExportPanel({ bg, fg }) {
-  const css = toCSSVars({ bg, fg })
-  const tw = toTailwindConfig({ bg, fg })
-  const json = toJSONTokens({ bg, fg })
+  const css = toCSSVars({ bg, fg });
+  const tw = toTailwindConfig({ bg, fg });
+  const json = toJSONTokens({ bg, fg });
 
   return (
     <div className="space-y-3 rounded-lg border border-gray-200 p-3 dark:border-neutral-800">
@@ -53,5 +53,5 @@ export default function ExportPanel({ bg, fg }) {
       <TextBlock label="Tailwind config snippet" value={tw} />
       <TextBlock label="JSON design tokens" value={json} />
     </div>
-  )
+  );
 }

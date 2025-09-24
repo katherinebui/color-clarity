@@ -1,8 +1,8 @@
 // Badge that displays WCAG AA/AAA pass/fail for normal and large text
 // Uses simple text and icons to avoid relying on color alone.
 
-import React from 'react'
-import { formatRatio, evaluateWCAG } from '../utils/contrast'
+import React from 'react';
+import { formatRatio, evaluateWCAG } from '../utils/contrast';
 
 function StatusPill({ label, ok, id }) {
   return (
@@ -27,12 +27,12 @@ function StatusPill({ label, ok, id }) {
       </span>
       <span>{label}</span>
     </div>
-  )
+  );
 }
 
 export default function ContrastBadge({ bg, fg, className = '' }) {
-  const wcag = evaluateWCAG(bg, fg)
-  const r = formatRatio(wcag.ratio)
+  const wcag = evaluateWCAG(bg, fg);
+  const r = formatRatio(wcag.ratio);
   return (
     <div className={`flex flex-wrap items-center gap-2 ${className}`}>
       <span className="text-sm font-medium" aria-label={`Contrast ratio ${r}:1`}>
@@ -43,5 +43,5 @@ export default function ContrastBadge({ bg, fg, className = '' }) {
       <StatusPill label="AAA Normal" ok={wcag.AAA.normal} id="aaa-normal" />
       <StatusPill label="AAA Large" ok={wcag.AAA.large} id="aaa-large" />
     </div>
-  )
+  );
 }

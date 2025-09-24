@@ -2,48 +2,48 @@
 // Uses react-colorful HexColorPicker for visual picking and a text input for direct HEX entry.
 // We avoid relying on color alone by always rendering the current hex value and semantic labels.
 
-import React, { useId, useState, useEffect } from 'react'
-import { HexColorPicker } from 'react-colorful'
+import React, { useId, useState, useEffect } from 'react';
+import { HexColorPicker } from 'react-colorful';
 
 export default function ColorControls({ label, color, onChange }) {
-  const inputId = useId()
-  const pickerId = useId()
-  const errorId = useId()
-  const [inputValue, setInputValue] = useState(color)
-  const [error, setError] = useState('')
+  const inputId = useId();
+  const pickerId = useId();
+  const errorId = useId();
+  const [inputValue, setInputValue] = useState(color);
+  const [error, setError] = useState('');
 
   // Sync input value when color prop changes (e.g., from color picker or suggestions)
   useEffect(() => {
-    setInputValue(color)
-    setError('') // Clear error when color changes externally
-  }, [color])
+    setInputValue(color);
+    setError(''); // Clear error when color changes externally
+  }, [color]);
 
   function handleInputChange(e) {
-    const val = e.target.value
-    setInputValue(val) // Always update local state to allow typing
+    const val = e.target.value;
+    setInputValue(val); // Always update local state to allow typing
     
     // Clear error while typing to avoid distracting feedback
     if (error) {
-      setError('')
+      setError('');
     }
   }
 
   function handleInputCommit(e) {
-    const val = e.target.value.trim()
+    const val = e.target.value.trim();
     // Basic normalization to #RRGGBB if possible
     if (/^#?[0-9a-fA-F]{6}$/.test(val)) {
-      const hex = val.startsWith('#') ? val : `#${val}`
-      onChange(hex)
-      setInputValue(hex) // Normalize the display value
-      setError('') // Clear any existing error
+      const hex = val.startsWith('#') ? val : `#${val}`;
+      onChange(hex);
+      setInputValue(hex); // Normalize the display value
+      setError(''); // Clear any existing error
     } else if (val === '') {
       // Empty input - revert to current color without error
-      setInputValue(color)
-      setError('')
+      setInputValue(color);
+      setError('');
     } else {
       // Invalid input - show error and revert
-      setError('Please enter a valid hex color (e.g., #1e90ff or 1e90ff)')
-      setInputValue(color)
+      setError('Please enter a valid hex color (e.g., #1e90ff or 1e90ff)');
+      setInputValue(color);
     }
   }
 
@@ -64,7 +64,7 @@ export default function ColorControls({ label, color, onChange }) {
           onChange={handleInputChange}
           onBlur={handleInputCommit}
           onKeyDown={(e) => {
-            if (e.key === 'Enter') handleInputCommit(e)
+            if (e.key === 'Enter') handleInputCommit(e);
           }}
           className={`w-36 rounded-md border px-2 py-1 text-sm shadow-sm focus-visible:ring-2 focus-visible:ring-blue-500 dark:bg-neutral-800 ${
             error 
@@ -111,5 +111,5 @@ export default function ColorControls({ label, color, onChange }) {
       {/* Visual color picker with full keyboard support */}
       <HexColorPicker color={color} onChange={onChange} aria-label={`${label} color picker`} />
     </div>
-  )
+  );
 }

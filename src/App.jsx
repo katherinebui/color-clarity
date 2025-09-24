@@ -1,44 +1,53 @@
-import { useMemo, useRef, useState } from 'react'
-import './App.css'
-import './index.css'
-import ColorControls from './components/ColorControls'
-import AccessiblePreview from './components/AccessiblePreview'
-import Suggestions from './components/Suggestions'
-import ExportPanel from './components/ExportPanel'
-import { evaluateWCAG } from './utils/contrast'
+import { useMemo, useRef, useState } from 'react';
+import './App.css';
+import './index.css';
+import ColorControls from './components/ColorControls';
+import AccessiblePreview from './components/AccessiblePreview';
+import Suggestions from './components/Suggestions';
+import ExportPanel from './components/ExportPanel';
+import { evaluateWCAG, suggestAccessibleForeground, CONTRAST_THRESHOLDS } from './utils/contrast';
 
 function randomHex() {
   return `#${Math.floor(Math.random() * 0xffffff)
     .toString(16)
-    .padStart(6, '0')}`
+    .padStart(6, '0')}`;
+}
+
+function generateAccessiblePair() {
+  // Generate a random background color
+  const bg = randomHex();
+  
+  // Use our smart suggestion function to get an accessible foreground
+  const fg = suggestAccessibleForeground(bg, CONTRAST_THRESHOLDS.AA_NORMAL);
+  
+  return { bg, fg };
 }
 
 function App() {
   // Default to a high-contrast pair
-  const [bg, setBg] = useState('#0f172a') // slate-900
-  const [fg, setFg] = useState('#ffffff')
+  const [bg, setBg] = useState('#0f172a'); // slate-900
+  const [fg, setFg] = useState('#ffffff');
 
   // Live region to announce pass/fail status
-  const liveRef = useRef(null)
+  const liveRef = useRef(null);
 
-  const wcag = useMemo(() => evaluateWCAG(bg, fg), [bg, fg])
+  const wcag = useMemo(() => evaluateWCAG(bg, fg), [bg, fg]);
 
   function announceStatus() {
     const msg = `Contrast ${wcag.ratio.toFixed(2)} to 1. ` +
       `AA normal ${wcag.AA.normal ? 'passes' : 'fails'}. ` +
-      `AAA normal ${wcag.AAA.normal ? 'passes' : 'fails'}.`
+      `AAA normal ${wcag.AAA.normal ? 'passes' : 'fails'}.`;
     if (liveRef.current) {
-      liveRef.current.textContent = msg
+      liveRef.current.textContent = msg;
     }
   }
 
   function randomizePair() {
-    const newBg = randomHex()
-    const newFg = randomHex()
-    setBg(newBg)
-    setFg(newFg)
+    const { bg: newBg, fg: newFg } = generateAccessiblePair();
+    setBg(newBg);
+    setFg(newFg);
     // Defer announce to next tick so wcag recomputes
-    setTimeout(announceStatus, 0)
+    setTimeout(announceStatus, 0);
   }
 
   return (
@@ -96,7 +105,7 @@ function App() {
       {/* ARIA live region for updates (invisible) */}
       <div aria-live="polite" aria-atomic="true" className="sr-only" ref={liveRef} />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
