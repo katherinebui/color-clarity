@@ -19,7 +19,6 @@ A fun, accessible color generator web app that helps you create and evaluate col
 - **Color Utilities**: 
   - `react-colorful` for interactive color pickers
   - `chroma-js` for color contrast calculations and manipulation
-- **Node.js**: v22 LTS (managed via nvm)
 
 ## 🚀 Getting Started
 
